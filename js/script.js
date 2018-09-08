@@ -1,6 +1,11 @@
-// FSJS - Random Quote Generator
-const intervalTimer = setInterval(printQuote, 10000);
-// Create the array of quote objects and name it quotes
+/* === FSJS - Random Quote Generator ===
+Tested on the following Browsers:
+Firefox, Opera, Chrome
+===================================== */
+
+const intervalTimer = setInterval(printQuote, 10000);  // this is the global interval.  initial time : 10sec.
+
+// (FSJS)Create the array of quote objects and name it quotes
 const quotes = [
     {
         quote : "A good teacher can inspire hope, ignite the imagination, and instill a love of learning.", 
@@ -66,6 +71,7 @@ const quotes = [
     {
         quote : "Leadership and learning are indispensable to each other.",
         source : "John F. Kennedy",
+        year : "1963",
         tags: ["President"]
     },
     {
@@ -91,7 +97,8 @@ const quotes = [
     },
     {
         quote : "I have never met a man so ignorant that I couldn't learn something from him.",
-        source : "Galileo Galilei"
+        source : "Galileo Galilei",
+        year : "1564 - 1642"
     },
     {
         quote : "Learning is not attained by chance, it must be sought for with ardor and diligence.",
@@ -99,7 +106,8 @@ const quotes = [
     }, 
     {
         quote : "Your mind will answer most questions if you learn to relax and wait for the answer.",
-        source : "William S. Burroughs"
+        source : "William S. Burroughs",
+        year : "1914 - 1997"
     },
     {
         quote : "You cannot open a book without learning something.",
@@ -111,7 +119,8 @@ const quotes = [
     },
     {
         quote : "I like to listen. I have learned a great deal from listening carefully. Most people never listen.",
-        source : "Ernest Hemingway"
+        source : "Ernest Hemingway",
+        year : "1899 - 1961"
     },
     {
         quote : "You don't learn to walk by following rules. You learn by doing, and by falling over.",
@@ -171,7 +180,7 @@ const quotes = [
     },
 ];
 
-function getRandomQuote() {  // Create the getRandomQuuote function and name it getRandomQuote
+function getRandomQuote() {  // (FSJS)Create the getRandomQuuote function and name it getRandomQuote
     let randomNumberForQuote = getRandomNumbers();  //calls getRandomNumber() and inserts its value into the let Var. 
     
     let randomQuote = quotes[randomNumberForQuote];  //uses the  random number to get a random item from the quotes array.
@@ -179,21 +188,21 @@ function getRandomQuote() {  // Create the getRandomQuuote function and name it 
     return randomQuote; //return the randomQuote data from the quotes array.
 };
 
-function printQuote() { // Create the printQuote funtion and name it printQuote
+function printQuote() { // (FSJS)Create the printQuote funtion and name it printQuote
     let quoteData = getRandomQuote();  //Create a variable thats stores the getRandomQuote() function.
     let quoteOutput = `<p class="quote">${quoteData.quote}</p><p class="source">${quoteData.source}`;  //create a var to store the HTML string that contains the quote and source.
     
-    if ("citation" in quoteData) {  //conditional to test whether there are citations and/or years
+    if ("citation" in quoteData) {  //conditional to test whether there are citations, IF present then append to end of the quoteOutput
         quoteOutput += `<span class="citation"> ${quoteData.citation}</span>`;
     }
     
-    if ("year" in quoteData) {
+    if ("year" in quoteData) {  //conditional to test whether there is a year,  IF present then append to end of the quoteOutput
         quoteOutput += `<span class="year"> ${quoteData.year}</span>`;
     }
     
-    if ("tags" in quoteData) {
+    if ("tags" in quoteData) { //conditional to test whether there are tags,  IF present then append to end of the quoteOutput
         quoteOutput += `<br>tags: `;
-        for (let i = 0; i < quoteData.tags.length; i++) {
+        for (let i = 0; i < quoteData.tags.length; i++) {  //since tags are present, loop through the tag array and append them to quoteOutput.
             quoteOutput += ` "${quoteData.tags[i]}"`;
         }
     }
@@ -202,23 +211,23 @@ function printQuote() { // Create the printQuote funtion and name it printQuote
     randomBackgroundColor();
 };
 
-// This event listener will respond to "Show another quote" button clicks
-// when user clicks anywhere on the button, the "printQuote" function is called
+// (FSJS)This event listener will respond to "Show another quote" button clicks
+// (FSJS)when user clicks anywhere on the button, the "printQuote" function is called
 document.getElementById('loadQuote').addEventListener("click", printQuote, false);
 
-//Random Number Generator.
+/* == Random Number Generator. == */
 function getRandomNumbers() {
     let randomNumber = Math.floor(Math.random() * quotes.length);
     return randomNumber;
 };
 
-//Random Background Color Generator
+/* == Random Background Color Generator == */
 function randomBackgroundColor() {
-    let green = Math.floor(Math.random() * 256);
-    let red = Math.floor(Math.random() * 256);
-    let blue =  Math.floor(Math.random() * 256);
+    let red = Math.floor(Math.random() * 256); //generates the red part of the RGB
+    let green = Math.floor(Math.random() * 256);  //generates the green part of the RGB
+    let blue =  Math.floor(Math.random() * 256);  //generates the blue part of the RGB
 
-    let randomBackgroundColor = `rgba(${red},${green},${blue}, .85)`;
+    let randomBackgroundColor = `rgba(${red},${green},${blue}, .85)`;  // puts the BG color together.  The .85 opacity is for future random bg image implementation.  
 
     document.body.style.backgroundColor = randomBackgroundColor;
     document.getElementById('loadQuote').style.backgroundColor = randomBackgroundColor; //makes the button(s) background the same color as bg.
